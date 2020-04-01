@@ -1,0 +1,25 @@
+body {
+    // Content layout.
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+
+    // Content.
+    font-family: 'Oxygen', sans-serif;
+
+    & > * {
+        margin: 2rem 0;
+    }
+
+    & > img {
+        // Dimensions.
+        width: 80vw;
+        max-width: 70vh;
+    }
+
+    & > span {
+        font-size: 2rem;
+    }
+}
