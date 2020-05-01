@@ -1,25 +1,224 @@
+$desktop-breakpoint: 1230px;
+
+@mixin tb-on-desktop {
+    @media (min-width: $desktop-breakpoint) {
+        @content;
+    }
+}
+
+@mixin tb-on-mobile {
+    @media (max-width: #{$desktop-breakpoint - 1}) {
+        @content;
+    }
+}
+
 body {
-    // Content layout.
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    justify-content: center;
-    align-items: center;
+    // Positioning.
+    margin: 0;
 
     // Content.
+    overflow-x: hidden;
+    padding: 0;
+    background-color: rgb(29, 28, 33);
     font-family: 'Oxygen', sans-serif;
-
-    & > * {
-        margin: 2rem 0;
-    }
-
-    & > img {
+    
+    & > div {
         // Dimensions.
-        width: 80vw;
-        max-width: 70vh;
+        width: 100vw;
+        
+        // Content layout.
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: start;
+
+        // Content.
+        & > img {
+            width: 100%;
+            height: auto;
+        }
+    }
+    
+    $tb-action-desktop-height: 40px;
+    $tb-action-mobile-height: 24px;
+
+    & > div.actions {
+        // Positioning.
+        position: fixed;
+        bottom: 8px;
+        right: 0;
+
+        // Dimensions.
+        width: auto;
+
+        // Content layout.
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: space-around;
+        align-items: flex-end;
+
+        // Content.
+        $tb-phone-color: rgb(5, 128, 5);
+        @include tb-on-desktop {
+            font-size: #{$tb-action-desktop-height / 2};
+        }
+        @include tb-on-mobile {
+            font-size: #{$tb-action-mobile-height / 2};
+        }
+
+        & > * {
+            margin: 12px 0;
+        }
+    
+        & > a.phone {
+            // Dimensions.
+            width: 3em;
+            height: 2em;
+            border: .15em solid white;
+            border-right: none;
+            border-top-left-radius: 2em;
+            border-bottom-left-radius: 2em;
+    
+            // Content layout.
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: start;
+            align-items: center;
+    
+            // Content.
+            background-color: $tb-phone-color;
+            padding: .75em;
+            transition-property: background-color, width;
+            transition-duration: 200ms;
+            overflow: hidden;
+    
+            & > img {
+                width: auto;
+                height: 100%;
+            }
+    
+            & > span {
+                // Positioning.
+                margin-left: .5em;
+    
+                // Dimensions.
+                flex: 0;
+                min-width: 20em;
+    
+                // Content.
+                color: transparent;
+            }
+    
+            // Variations.
+            &:hover {
+                // Dimensions.
+                width: calc(3em + 8em);
+    
+                // Content.
+                background-color: lighten($tb-phone-color, 7.5%);
+    
+                & > span {
+                    display: inline;
+                    color: white;
+                }
+            }
+    
+            // Animations.
+            animation-name: call-to-action;
+            animation-duration: 600ms;
+            animation-delay: 600ms;
+    
+            @keyframes call-to-action {
+                20% {
+                    transform: scale(1.6);
+                    background-color: lighten($tb-phone-color, 10%);
+                }
+    
+                40% {
+                    transform: scale(1);
+                }
+    
+                60% {
+                    transform: scale(1.4);
+                    background-color: lighten($tb-phone-color, 7.5%);
+                }
+            }
+        }
+    
+        $tb-facebook-color: rgb(59, 89, 152);
+    
+        & > a.facebook {
+            // Dimensions.
+            width: 3em;
+            height: 2em;
+            border: .15em solid white;
+            border-right: none;
+            border-top-left-radius: 2em;
+            border-bottom-left-radius: 2em;
+    
+            // Content layout.
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: start;
+            align-items: center;
+    
+            // Content.
+            background-color: $tb-facebook-color;
+            padding: .75em;
+            transition-property: background-color, width;
+            transition-duration: 200ms;
+            overflow: hidden;
+    
+            & > img {
+                width: auto;
+                height: 100%;
+            }
+    
+            & > span {
+                // Positioning.
+                margin-left: .5em;
+    
+                // Dimensions.
+                flex: 0;
+                min-width: 26em;
+    
+                // Content.
+                color: transparent;
+            }
+    
+            // Variations.
+            &:hover {
+                width: calc(60px + 12em);
+    
+                // Content.
+                background-color: lighten($tb-facebook-color, 7.5%);
+    
+                & > span {
+                    display: inline;
+                    color: white;
+                }
+            }
+        }
     }
 
-    & > span {
-        font-size: 2rem;
+}
+
+@include tb-on-desktop {
+    .mobile {
+        display: none;
     }
+}
+
+@include tb-on-mobile {
+    .desktop {
+        display: none;
+    }
+}
+
+a, a:hover, a:visited, a:focus {
+    text-decoration: none;
+    color: inherit;
 }
